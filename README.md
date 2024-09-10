@@ -10,13 +10,29 @@ or
 
 `cinc-auditor plugin install inspec-reporter-honeycomb`
 
+
+## OpenTelemetry Ruby SDK required
+
+You can install using chef workstation or local ruby with:
+
+`chef gem install opentelemetry-sdk opentelemetry-otlp opentelemetry-exporter-otlp google-protobuf opentelemetry-instrumentation-all`
+Note: you may have to add the above binary location into your path, 
+eg, export PATH=/home/vagrant/.chef/gem/ruby/3.1.0/bin:$PATH
+
+or 
+
+`gem install opentelemetry-sdk opentelemetry-otlp opentelemetry-exporter-otlp google-protobuf opentelemetry-instrumentation-all`
+
+
 ## Required environment variables
 
-You must set two environment variables:
+You must set three environment variables:
 
 ```bash
-export HONEYCOMB_API_KEY="<your API key>"
-export HONEYCOMB_API_URL="https://api.honeycomb.io/1/batch/<your dataset name>"
+export OTEL_EXPORTER_OTLP_ENDPOINT="https://api.honeycomb.io" # US instance
+# export OTEL_EXPORTER_OTLP_ENDPOINT="https://api.eu1.honeycomb.io" # EU instance
+export OTEL_EXPORTER_OTLP_HEADERS="x-honeycomb-team=<your API key>" # ingest key
+export OTEL_SERVICE_NAME="<dataset name>" # will be created on first run
 ```
 
 ## Run with the new reporter
